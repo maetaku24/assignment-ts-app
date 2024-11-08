@@ -21,21 +21,21 @@ export const Detail: React.FC = () => {
   }, [id]);
 
   if (loading) return <div className={classes.postloading}>読み込み中...</div>
-  if (!loading && !post) return <div className={classes.postError}>記事が見つかりませんでした。</div>
+  if (!post) return <div className={classes.postError}>記事が見つかりませんでした。</div>
 
   return (
     <div className={classes.container}>
       <div className={classes.post}>
         <div className={classes.postImage}>
-          <img src={post?.thumbnailUrl} alt="" />
+          <img src={post.thumbnailUrl} alt="" />
         </div>
         <div className={classes.postContent}>
           <div className={classes.postInfo}>
             <div className={classes.postDate}>
-              {post && new Date(post.createdAt).toLocaleDateString()}
+              {new Date(post.createdAt).toLocaleDateString()}
             </div>
             <div className={classes.postCategories}>
-              {post?.categories.map((category, id) => {
+              {post.categories.map((category, id) => {
                 return (
                   <p key={id} className={classes.postCategory}>
                     {category}
@@ -44,10 +44,10 @@ export const Detail: React.FC = () => {
               })}
             </div>
           </div>
-          <p className={classes.postTitle}>{post?.title}</p>
+          <p className={classes.postTitle}>{post.title}</p>
           <div
             className={classes.postBody}
-            dangerouslySetInnerHTML={{ __html: post?.content || "" }}
+            dangerouslySetInnerHTML={{ __html: post.content || "" }}
           />
         </div>
       </div>
