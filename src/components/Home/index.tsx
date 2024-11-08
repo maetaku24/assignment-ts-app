@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import classes from "./Home.module.css";
 import { Link } from "react-router-dom";
+import { Post } from "../../interfaces/interfaces";
 
-export const Home = () => {
+export const Home: React.FC = () => {
 
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetcher = async () => {

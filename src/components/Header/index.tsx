@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Header.module.css";
 import { Link } from "react-router-dom";
 
-export const Header = () => {
+export const Header: React.FC = () => {
   return (
     <header className={classes.header}>
       <Link to="/" className={classes.headerLink}>
