@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import classes from "./Detail.module.css";
+import { Post } from "../../interfaces/interfaces";
 
-export const Detail = () => {
-  const { id } = useParams();
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(false);
+export const Detail: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [post, setPost] = useState<Post | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetcher = async() => {
@@ -20,7 +21,7 @@ export const Detail = () => {
   }, [id]);
 
   if (loading) return <div className={classes.postloading}>読み込み中...</div>
-  if (!loading && !post) return <div className={classes.postError}>記事が見つかりませんでした。</div>
+  if (!post) return <div className={classes.postError}>記事が見つかりませんでした。</div>
 
   return (
     <div className={classes.container}>
@@ -28,7 +29,7 @@ export const Detail = () => {
         <div className={classes.postImage}>
           <img src={post.thumbnailUrl} alt="" />
         </div>
-        <div className={post.postContent}>
+        <div className={classes.postContent}>
           <div className={classes.postInfo}>
             <div className={classes.postDate}>
               {new Date(post.createdAt).toLocaleDateString()}
@@ -46,7 +47,7 @@ export const Detail = () => {
           <p className={classes.postTitle}>{post.title}</p>
           <div
             className={classes.postBody}
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: post.content || "" }}
           />
         </div>
       </div>

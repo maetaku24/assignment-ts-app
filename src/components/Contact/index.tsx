@@ -1,14 +1,20 @@
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-export const Contact = () => {
+interface FormValues {
+  name: string;
+  email: string;
+  message: string;
+}
+
+export const Contact: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm();
+  } = useForm<FormValues>();
 
-  const onSubmit = async (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       const res = await fetch(
         "https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/contacts",
@@ -42,7 +48,6 @@ export const Contact = () => {
           <div className="w-full">
             <input
               id="name"
-              name="name"
               type="text"
               className="border border-gray-300 rounded-lg p-4 w-full"
               {...register("name", {
@@ -63,14 +68,12 @@ export const Contact = () => {
           <div className="w-full">
             <input
               id="email"
-              name="email"
               type="email"
               className="border border-gray-300 rounded-lg p-4 w-full"
               {...register("email", {
                 required: "メールアドレスは必須です。",
-                maxLength: {
-                  value:
-                    /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
+                pattern: {
+                  value: /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
                   message: "正しいメールアドレスを入力してください。",
                 },
               })}
@@ -86,9 +89,7 @@ export const Contact = () => {
           <div className="w-full">
             <textarea
               id="message"
-              name="message"
-              type="text"
-              rows="8"
+              rows={8}
               className="w-full border border-gray-300 rounded-lg p-10"
               {...register("message", {
                 required: "本文は必須です。",

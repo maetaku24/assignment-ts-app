@@ -4,7 +4,7 @@ import { Home } from "./components/Home";
 import { Detail } from "./components/Detail";
 import { Contact } from "./components/Contact";
 
-export const App = () => {
+export const App: React.FC = () => {
   return (
     <div>
       <Header />
